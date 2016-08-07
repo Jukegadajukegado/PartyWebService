@@ -1,17 +1,16 @@
-var webpack = require('webpack');
-var WebpackDevServer = require('webpack-dev-server');
-var config = require('./webpack.config');
+var express = require('express');
+var app = express();
 
-var port = process.env.PORT || 3000;
+app.set('port', (process.env.PORT || 5000));
 
-new WebpackDevServer(webpack(config), {
-  publicPath: config.output.publicPath,
-  hot: true,
-  historyApiFallback: true
-}).listen(port, 'localhost', function (err, result) {
-  if (err) {
-    return console.log(err);
-  }
+app.get('/', function(req, res) {
+    res.sendFile(__dirname + '/index.html');
+});
 
-  console.log('Listening at http://localhost:'+port+'/');
+app.use(express.static(__dirname + '/public'));
+
+// views is directory for all template files
+
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
 });
