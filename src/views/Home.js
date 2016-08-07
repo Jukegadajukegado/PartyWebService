@@ -2,10 +2,12 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import autobind from 'autobind-decorator';
 import { Link } from 'react-router'
+import map from '../map';
 
-export default class Home extends React.Component {
+class Home extends React.Component {
   constructor(props) {
     super(props);
+    console.log(this.props);
     this.state = {menuOpen: false};
   } 
   render() {
@@ -17,3 +19,4 @@ export default class Home extends React.Component {
   }
 }
 
+export default map(Home);

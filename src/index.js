@@ -6,7 +6,13 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import * as Colors from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router';
-import Pages from './views/pages.js';
+import * as Pages from './views/pages.js';
+import { createStore, combineReducers } from 'redux';
+import * as reducers from './reducers/index';
+import { Provider } from 'react-redux'; 
+
+const reducer = combineReducers(reducers);
+const store = createStore(reducer);
 
 injectTapEventPlugin();
 
@@ -15,15 +21,19 @@ const muiTheme = getMuiTheme({
     primary1Color: Colors.green600,
   }
 });
+ 
 ReactDOM.render((
-    <MuiThemeProvider muiTheme={muiTheme}>
-        <Router history={browserHistory}>
-            <Route path="/" component={App}>
-                <IndexRoute component={Pages.Home} />
-                <Route path="join" component={Pages.Join}/>
-                <Route path="create" component={Pages.Create} />
-                <Route path="*" component={Pages.NotFound} />
-            </Route>
-        </Router>
-    </MuiThemeProvider>
+	<Provider store={store}>
+        <MuiThemeProvider muiTheme={muiTheme}>
+            <Router history={browserHistory}>
+                <Route path="/" component={App}>
+                    <IndexRoute component={Pages.Home} />
+                    <Route path="join" component={Pages.Join}/>
+                    <Route path="create" component={Pages.Create} />
+                    <Route path="settings" component={Pages.Settings} />
+                    <Route path="*" component={Pages.NotFound} />
+                </Route>
+            </Router>
+        </MuiThemeProvider>
+    </Provider>
 ), document.getElementById('root'));

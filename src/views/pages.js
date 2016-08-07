@@ -1,10 +1,5 @@
-import Home from './Home.js';
-import Join from './Join.js';
-import Create from './Create.js';
-import NotFound from './NotFound.js';
-export default {
-    Home: Home,
-    Join: Join,
-    Create: Create,
-    NotFound: NotFound
-};
+export {default as Home} from './Home';
+export {default as Join} from './Join';
+export {default as Create} from './Create';
+export {default as Settings} from './Settings';
+export {default as NotFound} from './NotFound';
