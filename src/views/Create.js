@@ -11,7 +11,7 @@ export default class Create extends React.Component {
   render() {
     return (
       <div>
-        <h1>Create</h1>
+        <h1>Create a game</h1>
       </div>
     );
   }
