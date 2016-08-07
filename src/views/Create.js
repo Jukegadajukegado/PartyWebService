@@ -18,7 +18,7 @@ export default class Create extends React.Component {
             <option value="mafia">Mafia</option>
             <option value="Spyfall">Spyfall</option>
           </select>
-          <br><br>
+          <br></br>
           <input type="submit" >
         </form>
       </div>
