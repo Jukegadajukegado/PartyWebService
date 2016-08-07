@@ -19,7 +19,7 @@ export default class Create extends React.Component {
             <option value="Spyfall">Spyfall</option>
           </select>
           <br></br>
-          <input type="submit" >
+          <input type="submit" />
         </form>
       </div>
     );
