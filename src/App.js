@@ -9,6 +9,7 @@ import {Link} from 'react-router';
 import { hashHistory } from 'react-router';
 import Sound from 'react-sound';
 import map from './map';
+import FontIcon from 'material-ui/FontIcon';
 
 class App extends React.Component {
   constructor(props) {
@@ -43,10 +44,10 @@ class App extends React.Component {
             <div style={{position:'absolute', bottom:3, left: 0, padding: '1em', fontWeight: 'bold', boxSizing:'border-box', width: '100%', background: 'rgba(0,0,0,0.7)', color: '#FFF'}}>{currentPage.toUpperCase()}</div>
             <img src="/img/banner.jpg" style={{width:'100%'}} />
           </div>
-          <Link to={'/'} onTouchTap={this.handleClose}><MenuItem style={this.focused('home')}>Home</MenuItem></Link>
-          <Link to={'/join'} onTouchTap={this.handleClose}><MenuItem style={this.focused('join')}>Join Game</MenuItem></Link>
-          <Link to={'/create'} onTouchTap={this.handleClose}><MenuItem style={this.focused('create')}>Create Game</MenuItem></Link>
-          <Link to={'/settings'} onTouchTap={this.handleClose}><MenuItem style={this.focused('settings')}>Settings</MenuItem></Link>
+          <Link to={'/'} onTouchTap={this.handleClose}><MenuItem style={this.focused('home')} leftIcon={<FontIcon style={this.focused('home')} className="material-icons">&#xE88A;</FontIcon>} >Home</MenuItem></Link>
+          <Link to={'/join'} onTouchTap={this.handleClose}><MenuItem style={this.focused('join')} leftIcon={<FontIcon style={this.focused('join')} className="material-icons">&#xE8BE;</FontIcon>} >Join Game</MenuItem></Link>
+          <Link to={'/create'} onTouchTap={this.handleClose}><MenuItem style={this.focused('create')} leftIcon={<FontIcon style={this.focused('create')} className="material-icons">&#xE03B;</FontIcon>} >Create Game</MenuItem></Link>
+          <Link to={'/settings'} onTouchTap={this.handleClose}><MenuItem style={this.focused('settings')} leftIcon={<FontIcon style={this.focused('settings')} className="material-icons">&#xE8B8;</FontIcon>} >Settings</MenuItem></Link>
         </Drawer>
         <AppBar title="PartyWebService" onLeftIconButtonTouchTap={this.toggleMenu} />
         <div className="container">{this.props.children}</div>
