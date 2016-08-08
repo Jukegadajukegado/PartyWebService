@@ -5,12 +5,12 @@ var fs = require('fs');
 
 var revision = {message: "Failed to retrieve revision", hash: "unknown"};
 
-if(process.env.HEROKU_SLUG_COMMIT){
+if(process.env.SOURCE_VERSION){
   console.log("Detected Heroku Commit Slug");
-  revision = {message: HEROKU_SLUG_DESCRIPTION, hash: process.env.HEROKU_SLUG_COMMIT};
+  revision = {hash: process.env.SOURCE_VERSION};
 }else{
   var rev = require('git-rev-sync');
-  revision = {message: rev.message(), hash: rev.long()};
+  revision = {hash: rev.long()};
 }
 
 fs.writeFile("./public/js/version.js", "window.commit="+JSON.stringify(revision)+";"); 
