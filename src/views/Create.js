@@ -25,6 +25,7 @@ class Create extends React.Component {
               primaryText={game.name}
               secondaryText={<p>{game.description}</p>}
               secondaryTextLines={2}
+              key={game.id}
             />
           ))}
         </List>
