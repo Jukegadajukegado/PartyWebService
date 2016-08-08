@@ -1,3 +1,4 @@
+export default class Spyfall{
     get name(){
         return "Spyfall";
     }
