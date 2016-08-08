@@ -21,6 +21,14 @@ class Settings extends React.Component {
                 <Toggle label="Play Background Music" onToggle={this.props.dispatch.settings.toggleAudio} toggled={this.props.settings.audio} labelPosition="right" />
             </CardText>
         </Card>
+        <br/>
+        <Card>
+            <CardTitle title="Version Information" />
+            <CardText style={{paddingTop: 0}}>
+              <pre style={{marginTop:0}}>Patch <a target="_blank" href={"https://github.com/Jukegadajukegado/PartyWebService/commit/"+window.commit.hash}>{window.commit.hash}</a></pre>
+              <pre style={{marginBottom:0}}>{window.commit.message}</pre>
+            </CardText>
+        </Card>
         <p>Settings Automatically Save</p>
       </div>
     );

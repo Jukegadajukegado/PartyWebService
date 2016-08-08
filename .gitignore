@@ -3,3 +3,4 @@ npm-debug.log
 .DS_Store
 dist
 public/js/bundle.js
+public/js/version.js

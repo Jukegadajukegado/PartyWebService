@@ -19,11 +19,6 @@ class Home extends React.Component {
         <h1>Party Web Service</h1>
 
         <p> Click on the menu to perform an action </p>
-        <Card>
-            <CardTitle title="Patch Note" />
-            <CardText style={{paddingTop: 0}}>
-            </CardText>
-        </Card>
 
       </div>
     );

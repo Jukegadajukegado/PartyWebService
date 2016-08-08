@@ -47,7 +47,7 @@ class App extends React.Component {
     return (  
       <div>
         <Drawer className="drawer" width={300} docked={this.state.largeWindow} open={this.state.menuOpen || this.state.largeWindow} onRequestChange={(open) => this.setState({menuOpen: open})} >
-          <AppBar title="PartyWebService" onLeftIconButtonTouchTap={this.handleClose}/>
+          <AppBar title="PartyWebService" onLeftIconButtonTouchTap={this.handleClose}/> 
           <div style={{position:'relative'}} >
             <div style={{position:'absolute', bottom:3, left: 0, padding: '1em', fontWeight: 'bold', boxSizing:'border-box', width: '100%', background: 'rgba(0,0,0,0.7)', color: '#FFF'}}>{currentPage.toUpperCase()}</div>
             <img src="/img/banner.jpg" style={{width:'100%'}} />
@@ -65,4 +65,4 @@ class App extends React.Component {
   }
 }
 
-export default map(App);
+export default map(App);  
