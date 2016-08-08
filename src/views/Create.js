@@ -18,13 +18,13 @@ class Create extends React.Component {
     return (
       <Card>
         <List>
-          <Subheader>Create</Subheader>
+          <Subheader>Create a game</Subheader>
           {this.props.games.games.map((game, index) => (
             <ListItem
               leftAvatar={<Avatar src={"/img/games/"+game.name.toLowerCase()+".jpg"} />}
               primaryText={game.name}
               secondaryText={<p>{game.description}</p>}
-              secondaryTextLines={2}
+              secondaryTextLines={3}
               key={game.id}
             />
           ))}
