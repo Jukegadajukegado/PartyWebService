@@ -18,7 +18,7 @@ class Create extends React.Component {
     return (
       <Card>
         <List>
-          <Subheader>Create a Game</Subheader>
+          <Subheader>Create</Subheader>
           {this.props.games.games.map((game, index) => (
             <ListItem
               leftAvatar={<Avatar src={"/img/games/"+game.name.toLowerCase()+".jpg"} />}
