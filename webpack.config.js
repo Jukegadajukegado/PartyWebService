@@ -13,7 +13,7 @@ if(process.env.SOURCE_VERSION){
   revision = {hash: rev.long()};
 }
 
-fs.writeFile("./public/js/version.js", "window.commit="+JSON.stringify(revision)+";"); 
+fs.writeFile(__dirname+"/public/js/version.js", "window.commit="+JSON.stringify(revision)+";"); 
 
 module.exports = {
   devtool: 'eval',
