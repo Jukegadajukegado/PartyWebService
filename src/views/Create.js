@@ -21,7 +21,7 @@ class Create extends React.Component {
           <Subheader>Create a Game</Subheader>
           {this.props.games.games.map((game, index) => (
             <ListItem
-              leftAvatar={<Avatar src={"/img/games/"+game.name+".jpg"} />}
+              leftAvatar={<Avatar src={"/img/games/"+game.name.toLowerCase()+".jpg"} />}
               primaryText={game.name}
               secondaryText={<p>{game.description}</p>}
               secondaryTextLines={2}
