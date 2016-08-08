@@ -1,27 +1,36 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import autobind from 'autobind-decorator';
-import { Link } from 'react-router'
+import { Link } from 'react-router';
+import map from '../map';
+import {List, ListItem} from 'material-ui/List';
+import {Card} from 'material-ui/Card';
+import Divider from 'material-ui/Divider';
+import Subheader from 'material-ui/Subheader';
+import Avatar from 'material-ui/Avatar';
 
-export default class Create extends React.Component {
+class Create extends React.Component {
   constructor(props) {
     super(props);
     this.state = {menuOpen: false};
   }
   render() {
     return (
-      <div>
-        <h1>Create a game</h1>
-        <br></br>
-        <form action="#">
-          <select name="Games">
-            <option value="mafia">Mafia</option>
-            <option value="Spyfall">Spyfall</option>
-          </select>
-          <br><br>
-          <input type="submit" />
-        </form>
-      </div>
+      <Card>
+        <List>
+          <Subheader>Create a Game</Subheader>
+          {this.props.games.games.map((game, index) => (
+            <ListItem
+              leftAvatar={<Avatar src={"/img/games/"+game.name+".jpg"} />}
+              primaryText={game.name}
+              secondaryText={<p>{game.description}</p>}
+              secondaryTextLines={2}
+            />
+          ))}
+        </List>
+      </Card>
     );
   }
 }
+
+export default map(Create);

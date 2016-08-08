@@ -7,12 +7,32 @@ import * as Colors from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router';
 import * as Pages from './views/pages.js';
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import * as reducers from './reducers/index';
 import { Provider } from 'react-redux'; 
+import * as storage from 'redux-storage'
+import createEngine from 'redux-storage-engine-localstorage';
+import createSocketIoMiddleware from 'redux-socket.io';
+let socket = io('/');
+import io from 'socket.io-client';
 
-const reducer = combineReducers(reducers);
-const store = createStore(reducer);
+
+const reducer = storage.reducer(combineReducers(reducers));
+
+const engine = createEngine('0LvI1FTaqPos4a6');
+
+const middleware = storage.createMiddleware(engine);
+
+const middleware1 = applyMiddleware(middleware)(createStore);
+
+let socketIoMiddleware = createSocketIoMiddleware(socket, "server/");
+
+let middleware2 = applyMiddleware(socketIoMiddleware)(middleware1);
+
+const store = middleware2(reducer);
+
+const load = storage.createLoader(engine);
+load(store);
 
 injectTapEventPlugin();
 
@@ -22,6 +42,8 @@ const muiTheme = getMuiTheme({
   }
 });
  
+
+
 ReactDOM.render((
 	<Provider store={store}>
         <MuiThemeProvider muiTheme={muiTheme}>

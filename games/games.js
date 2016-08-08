@@ -1,0 +1,1 @@
+export {default as Mafia} from './Mafia';

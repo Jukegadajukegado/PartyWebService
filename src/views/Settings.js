@@ -21,6 +21,7 @@ class Settings extends React.Component {
                 <Toggle label="Play Background Music" onToggle={this.props.dispatch.settings.toggleAudio} toggled={this.props.settings.audio} labelPosition="right" />
             </CardText>
         </Card>
+        <p>Settings Automatically Save</p>
       </div>
     );
   }

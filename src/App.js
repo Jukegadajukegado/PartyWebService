@@ -14,14 +14,22 @@ import FontIcon from 'material-ui/FontIcon';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {menuOpen: false};
+    this.state = {menuOpen: false, largeWindow: false};
     this.pageNames = {
       '/': 'home',
       '/join': 'join',
       '/create': 'create',
       '/settings': 'settings'
     };
+    window.onresize = this.checkResize;
   } 
+  componentDidMount(){
+    this.checkResize();
+  }
+  @autobind
+  checkResize(){
+      this.setState({largeWindow: window.innerWidth > 1270});
+  }
   @autobind
   toggleMenu(){
     this.setState({menuOpen: !this.state.menuOpen});
@@ -38,7 +46,7 @@ class App extends React.Component {
     const currentPage = this.pageNames[this.props.location.pathname];
     return (  
       <div>
-        <Drawer className="drawer" width={300} docked={false} open={this.state.menuOpen} onRequestChange={(open) => this.setState({menuOpen: open})} >
+        <Drawer className="drawer" width={300} docked={this.state.largeWindow} open={this.state.menuOpen || this.state.largeWindow} onRequestChange={(open) => this.setState({menuOpen: open})} >
           <AppBar title="PartyWebService" onLeftIconButtonTouchTap={this.handleClose}/>
           <div style={{position:'relative'}} >
             <div style={{position:'absolute', bottom:3, left: 0, padding: '1em', fontWeight: 'bold', boxSizing:'border-box', width: '100%', background: 'rgba(0,0,0,0.7)', color: '#FFF'}}>{currentPage.toUpperCase()}</div>
@@ -49,7 +57,7 @@ class App extends React.Component {
           <Link to={'/create'} onTouchTap={this.handleClose}><MenuItem style={this.focused('create')} leftIcon={<FontIcon style={this.focused('create')} className="material-icons">&#xE03B;</FontIcon>} >Create Game</MenuItem></Link>
           <Link to={'/settings'} onTouchTap={this.handleClose}><MenuItem style={this.focused('settings')} leftIcon={<FontIcon style={this.focused('settings')} className="material-icons">&#xE8B8;</FontIcon>} >Settings</MenuItem></Link>
         </Drawer>
-        <AppBar title="PartyWebService" onLeftIconButtonTouchTap={this.toggleMenu} />
+        <AppBar style={this.state.largeWindow?{zIndex: 1400}:{}} showMenuIconButton={!this.state.largeWindow} title="PartyWebService" onLeftIconButtonTouchTap={this.toggleMenu} />
         <div className="container">{this.props.children}</div>
         <Sound url="audio/bg.mp3" playStatus={this.props.settings.audio?Sound.status.PLAYING:Sound.status.PAUSED} />
       </div>
