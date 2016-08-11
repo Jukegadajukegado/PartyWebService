@@ -16,7 +16,14 @@ class Game extends React.Component {
   render() {
     return (
       <div>
-        <h1>This is a game</h1>
+
+
+        <Card>
+
+        <CardTitle title={this.props.games.name}/>
+        <CardTitle subtitle = {"Room ID:  " + this.props.games.session}/>
+
+        </Card>
 
       </div>
     );
