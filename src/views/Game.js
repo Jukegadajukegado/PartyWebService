@@ -22,6 +22,7 @@ class Game extends React.Component {
     this.state = {menuOpen: false};
   }
 startgame(){
+alert ("game started")
 
 }
 
