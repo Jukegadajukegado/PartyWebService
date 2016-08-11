@@ -24,7 +24,8 @@ class Create extends React.Component {
               leftAvatar={<Avatar src={"/img/games/"+game.name.toLowerCase()+".jpg"} />}
               primaryText={game.name}
               secondaryText={<p>{game.description}</p>}
-              secondaryTextLines={3}
+              secondaryTextLines={2}
+              onClick={this.props.dispatch.games.create.bind(this, game.id)}
               key={game.id}
             />
           ))}

@@ -5,10 +5,11 @@ var app = express();
 
 var CONSTANTS = require('./src/constants.js').default;
 
-var engine = new (require('./engine.js').default)();
-
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+
+var engine = new (require('./engine.js').default)(io);
+
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -19,9 +20,9 @@ app.get('*', function(req, res) {
 });
 
 io.on('connection', function(socket){
-  socket.emit('action', {type:CONSTANTS.games.UPDATE_GAMES, data:engine.games})
-  socket.on('chat message', function(msg){
-    console.log('message: ' + msg);
+  socket.emit('action', {type:CONSTANTS.games.UPDATE, payload:engine.games})
+  socket.on('action', function(message){
+    engine.handleRequest(socket, message.type.substring(7), message.payload);
   });
 });
 

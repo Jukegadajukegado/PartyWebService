@@ -5,7 +5,25 @@ export default class Spyfall{
     get description(){
         return 'In SpyFall, there is a spy hidden among your workplace, find the spy by asking question'
     }
-    constructor(){
+    createGame(){ //{gameData, }
 
+    }
+    addUser(){
+
+    }
+    removeUser(){
+
+    }
+    receiveMessage(){
+
+    }
+    sendMessage(){
+
+    }
+    sendGameMessage(){
+
+    }
+    constructor(engine){
+        this.engine = engine;
     }
 }

@@ -9,6 +9,7 @@ import {Link} from 'react-router';
 import { hashHistory } from 'react-router';
 import Sound from 'react-sound';
 import map from './map';
+import superagent from 'superagent';
 import FontIcon from 'material-ui/FontIcon';
 
 class App extends React.Component {
@@ -19,9 +20,15 @@ class App extends React.Component {
       '/': 'home',
       '/join': 'join',
       '/create': 'create',
-      '/settings': 'settings'
+      '/settings': 'settings',
+      '/game': 'game'
     };
     window.onresize = this.checkResize;
+    var instance = this;
+    instance.props.dispatch.settings.updatePatch("Loading patch notes...");
+    superagent.get('/documents/patch.md').end(function(err, res){
+      instance.props.dispatch.settings.updatePatch(res.text);
+    });
   } 
   componentDidMount(){
     this.checkResize();

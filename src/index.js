@@ -53,6 +53,7 @@ ReactDOM.render((
                     <Route path="join" component={Pages.Join}/>
                     <Route path="create" component={Pages.Create} />
                     <Route path="settings" component={Pages.Settings} />
+                    <Route path="game" component={Pages.Game} />
                     <Route path="*" component={Pages.NotFound} />
                 </Route>
             </Router>
