@@ -38,6 +38,28 @@ class Game extends React.Component {
               <CardText style={{background:'#FAFAFA'}}>
                 <strong>Description:</strong><br/>{game.meta.description}
               </CardText>
+
+              <CardText style={{background:'#FAFAFA'}}>
+                <strong>Roles:</strong>
+                {(() => {
+             switch (game.meta.name ) {
+             case "Mafia":   return "Mafia";
+             case "Spyfall":
+
+             var roles = [];
+             for(var i=0;i <Object.keys(game.members).length;i++){
+               var role =["Spy","???"];
+               roles[i] = role[i];
+
+             }
+              return    <List><ListItem primaryText = {roles}/></List>  ;
+
+             default:      return "Error";
+         }
+        })()}
+              </CardText>
+
+              <RaisedButton label="startgame" primary={true}/>
             </Tab>
             <Tab label={"Players ("+Object.keys(game.members).length+")"} value="players">
               <div>
