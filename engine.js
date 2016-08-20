@@ -37,23 +37,24 @@ export default class GameEngine{
     }
     handleRequest(socket, action, payload){
         var instance = this;
-        switch(action){
-            case Constants.games.CREATE:
-                var id = ShortID.generate();
-                this.sessions[id] = {
-                    game: payload.game,
-                    members: {},
-                    data: {}
-                };
-                instance.messageUser(socket.id, Constants.games.GOTO_JOIN, id);
-                return; 
-            case Constants.games.JOIN:
-                this.process(socket.id, function(){
-                    instance.addUserToSession({id: socket.id, name: payload.name}, payload.session);
-                    socket.join(payload.session);
-                    instance.messageUser(socket.id, Constants.games.JOIN, id);
-                });
-        }
+        this.process(socket.id, function(){ //enable error throwing
+            switch(action){
+                case Constants.games.CREATE:
+                    var id = ShortID.generate();
+                    instance.sessions[id] = {
+                        game: payload.game,
+                        members: {},
+                        data: {}
+                    };
+                    instance.messageUser(socket.id, Constants.games.GOTO_JOIN, id);
+                    break; 
+                case Constants.games.JOIN:
+                        instance.addUserToSession({id: socket.id, name: payload.name}, payload.session);
+                        socket.join(payload.session);
+                        instance.messageUser(socket.id, Constants.games.JOIN, id);
+                    break; 
+            }
+        });
     }
     messageUser(id, action, payload){
         this.io.to(id).emit('action', {type: action, payload: payload});
