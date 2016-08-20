@@ -25,7 +25,7 @@ export default class GameEngine{
         try{
             callback();
         }catch(e){
-            this.messageUser(id, Constants.error.SHOW, e.message);
+            this.message(id, Constants.error.SHOW, e.message);
         }
     }
     saveData(session, data){
@@ -38,10 +38,20 @@ export default class GameEngine{
         user.name = user.name.trim();
         if(user.name.length == 0) throw new Error("Please enter a name!");
         if(user.name.length > 32) throw new Error("Please give us a shorter name!");
-        if(this.sessions[sessionId])
+        if(this.sessions[sessionId]){
             this.sessions[sessionId].members[user.id] = user.name;
-        else   
+            this.notify(sessionId, user.name+" has joined the game.");
+        }else   
             throw new Error("Session not found!");
+    }
+    removeUserFromSession(id, sessionId){
+        if(this.sessions[sessionId]){
+            this.notify(room, this.sessions[sessionId].members[id]+" has left the game.");
+            delete this.sessions[sessionId].members[id];
+        }
+    }
+    updateSession(session){
+        this.message(session, Constants.games.UPDATE_GAME, this.sessions[session]);
     }
     handleRequest(socket, action, payload){
         var instance = this;
@@ -54,21 +64,31 @@ export default class GameEngine{
                         members: {},
                         data: {}
                     };
-                    instance.messageUser(socket.id, Constants.games.GOTO_JOIN, id);
+                    instance.message(socket.id, Constants.games.GOTO_JOIN, id);
                     break; 
                 case Constants.games.JOIN:
                         instance.addUserToSession({id: socket.id, name: payload.name}, payload.session);
                         socket.join(payload.session);
-                        instance.messageUser(socket.id, Constants.games.JOIN, payload.session);
-                        instance.messageAll(Constants.games.UPDATE_GAME, instance.sessions[payload.session]);
+                        instance.message(socket.id, Constants.games.JOIN, payload.session);
+                        instance.updateSession(payload.session);
                     break; 
             }
         });
     }
+    handleDisconnect(socket){
+        for(var i in socket.rooms){  
+            var room = socket.rooms[i];
+            this.removeUserFromSession(socket.id, room);
+            this.updateSession(room);
+        }
+    }
     messageAll(action, payload){
         this.io.emit('action', {type: action, payload: payload});
     }
-    messageUser(id, action, payload){
+    notify(id, message){
+        this.message(id, Constants.error.SHOW, message);
+    }
+    message(id, action, payload){
         this.io.to(id).emit('action', {type: action, payload: payload});
     }
     constructor(io){

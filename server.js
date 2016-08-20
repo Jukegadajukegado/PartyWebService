@@ -24,6 +24,9 @@ io.on('connection', function(socket){
   socket.on('action', function(message){
     engine.handleRequest(socket, message.type.substring(7), message.payload);
   });
+  socket.on('disconnect', function(){
+    engine.handleDisconnect(socket);
+  });
 });
 
 http.listen(app.get('port'), function(){

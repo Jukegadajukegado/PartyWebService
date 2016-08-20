@@ -10,12 +10,6 @@ import map from '../map';
 import Chip from 'material-ui/Chip';
 import RaisedButton  from 'material-ui/RaisedButton';
 
-
-function removeplayer(){
-
-
-}
-
 class Game extends React.Component {
 
   constructor(props) {
