@@ -4,13 +4,17 @@ import { browserHistory } from 'react-router'
 
 const defaultState = {
   games: [],
+  game: {},
   session: ""
 };
 export default function games(state = defaultState, action) {
   state = _.cloneDeep(state);
   switch (action.type) {
     case Constants.games.UPDATE:
-      state.games = action.payload;
+      state.game = action.payload;
+      break;
+    case Constants.games.UPDATE_GAME:
+      state.game = action.payload;
       break;
     case Constants.games.JOIN:
       state.session = action.payload;

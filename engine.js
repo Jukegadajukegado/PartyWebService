@@ -51,10 +51,14 @@ export default class GameEngine{
                 case Constants.games.JOIN:
                         instance.addUserToSession({id: socket.id, name: payload.name}, payload.session);
                         socket.join(payload.session);
-                        instance.messageUser(socket.id, Constants.games.JOIN, id);
+                        instance.messageUser(socket.id, Constants.games.JOIN, payload.session);
+                        instance.messageAll(Constants.games.UPDATE_GAME, instance.sessions[payload.session]);
                     break; 
             }
         });
+    }
+    messageAll(action, payload){
+        this.io.emit('action', {type: action, payload: payload});
     }
     messageUser(id, action, payload){
         this.io.to(id).emit('action', {type: action, payload: payload});

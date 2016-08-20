@@ -7,6 +7,7 @@ var CONSTANTS = {
         UPDATE: 'games_update',
         CREATE: 'games_create',
         JOIN: 'games_join',
+        UPDATE_GAME: 'games_update_game',
         GOTO_JOIN: 'games_go_to_join',
         SET: 'games_set'
     },
