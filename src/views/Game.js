@@ -21,6 +21,7 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {menuOpen: false, tab: 'game'};
+
   }
   startgame(){
   }
@@ -33,6 +34,7 @@ class Game extends React.Component {
 
 
   render() {
+var number = 0;
     return (
       <div>
         <Card>
@@ -40,11 +42,22 @@ class Game extends React.Component {
           <Tabs value={this.state.tab}onChange={this.tabChange} >
             <Tab label="Game" value="game">
               <div>
+              <p id ="demo">
+
+
+              Number of players in current lobby : '{React.Children.count(this.props.games.game.members)}' // <- why this no work
+
+
+              </p>
              <p id ="role">
+
+
              {(() => {
                     switch (this.props.games.game.game){
                       case "Mafia":   return "ayy";
                       case "Spyfall": return "lmao";
+
+
                       default:      return "Error";
                     }
                   })()}
@@ -54,11 +67,14 @@ class Game extends React.Component {
             </Tab>
             <Tab label="Players" value="players">
               <div>
-                <List>
+                <List >
+
                   {_.map(this.props.games.game.members, (member, key) => (
                     <ListItem primaryText={member} />
                   ))}
+
                 </List>
+
               </div>
             </Tab>
           </Tabs>
@@ -67,6 +83,7 @@ class Game extends React.Component {
 
 
     );
+
   }
 }
 
