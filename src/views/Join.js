@@ -13,23 +13,24 @@ class Join extends React.Component {
     this.state = {menuOpen: false};
   }
   @autobind
+  handleChange(e){
+    this.props.dispatch.games.set({session: e.target.value});
+  }
+  @autobind
   joinGame(){
-    this.props.dispatch.games.join(this.refs.sessionInput.input.value, this.refs.nameInput.input.value);
+    this.props.dispatch.games.join(this.props.games.session, this.refs.nameInput.input.value);
   }
   render() {
     return (
       <Card>
           <CardTitle title="Join a game" />
           <CardText style={{paddingTop: 0}}>
-            <TextField hintText="Room ID" ref="sessionInput" fullWidth={true} defaultValue={this.props.games.session}/><br/>
+            <TextField hintText="Room ID" ref="sessionInput" fullWidth={true} value={this.props.games.session} onChange={this.handleChange}/><br/>
             <TextField hintText="Your Name" ref="nameInput" fullWidth={true}/><br/><br/>
             <RaisedButton label="Join Game" primary={true} onClick={this.joinGame} />
           </CardText>
       </Card>
     );
-  }
-  componentDidUpdate(){
-    this.refs.sessionInput.input.value = this.props.games.session;
   }
 }
 

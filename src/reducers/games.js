@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router'
 
 const defaultState = {
   games: [],
-  session: null
+  session: ""
 };
 export default function games(state = defaultState, action) {
   state = _.cloneDeep(state);
@@ -19,6 +19,9 @@ export default function games(state = defaultState, action) {
     case Constants.games.GOTO_JOIN:
       state.session = action.payload;
       browserHistory.push('/join')
+      break;
+    case Constants.games.SET: 
+      state = _.merge(state, action.payload);
       break;
     case 'DECREMENT':
       return state - 1
