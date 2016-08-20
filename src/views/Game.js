@@ -17,6 +17,7 @@ function removeplayer(){
 }
 
 class Game extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {menuOpen: false, tab: 'game'};
@@ -29,6 +30,8 @@ class Game extends React.Component {
       tab: tab,
     });
   };
+
+
   render() {
     return (
       <div>
@@ -37,7 +40,16 @@ class Game extends React.Component {
           <Tabs value={this.state.tab}onChange={this.tabChange} >
             <Tab label="Game" value="game">
               <div>
-                <p>Game Stuff</p>
+             <p id ="role">
+             {(() => {
+                    switch (this.props.games.game.game){
+                      case "Mafia":   return "ayy";
+                      case "Spyfall": return "lmao";
+                      default:      return "Error";
+                    }
+                  })()}
+             </p>
+
               </div>
             </Tab>
             <Tab label="Players" value="players">

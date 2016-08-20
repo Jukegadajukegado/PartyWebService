@@ -3,7 +3,7 @@ export default class Spyfall{
         return "Spyfall";
     }
     get description(){
-        return 'In SpyFall, there is a spy hidden among your workplace, find the spy by asking question'
+        return 'In SpyFall, there is a spy hidden among you.Ask questions, find the spy'
     }
     createGame(){ //{gameData, }
 
