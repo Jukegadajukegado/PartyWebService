@@ -4,7 +4,13 @@ import { browserHistory } from 'react-router'
 
 const defaultState = {
   games: [],
-  game: {},
+  game: {
+    meta: {
+      name: "",
+      description: ""
+    },
+    members: {}
+  },
   session: ""
 };
 export default function games(state = defaultState, action) {

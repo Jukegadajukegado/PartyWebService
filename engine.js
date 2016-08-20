@@ -6,7 +6,7 @@ export default class GameEngine{
         var games = [];
         for(var game in this.gameServers){
             var gameObject = this.gameServers[game];
-            games.push({name: gameObject.name, id: game, description: gameObject.description});
+            games.push(gameObject.meta);
         }
         return games;
     }
@@ -14,6 +14,11 @@ export default class GameEngine{
         this.gameServers = {};
         for(var game in games){
             this.gameServers[game] = new games[game];
+            this.gameServers[game].meta = {
+                name: this.gameServers[game].name,
+                description: this.gameServers[game].description,
+                id: game
+            }
         }
     }
     process(id, callback){
@@ -30,6 +35,9 @@ export default class GameEngine{
         
     }
     addUserToSession(user, sessionId){ // user: {name, id}, sessionId: string
+        user.name = user.name.trim();
+        if(user.name.length == 0) throw new Error("Please enter a name!");
+        if(user.name.length > 32) throw new Error("Please give us a shorter name!");
         if(this.sessions[sessionId])
             this.sessions[sessionId].members[user.id] = user.name;
         else   
@@ -42,7 +50,7 @@ export default class GameEngine{
                 case Constants.games.CREATE:
                     var id = ShortID.generate();
                     instance.sessions[id] = {
-                        game: payload.game,
+                        meta: instance.gameServers[payload.game].meta,
                         members: {},
                         data: {}
                     };
