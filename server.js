@@ -20,7 +20,7 @@ app.get('*', function(req, res) {
 });
 
 io.on('connection', function(socket){
-  socket.emit('action', {type:CONSTANTS.games.UPDATE, payload:engine.games})
+  engine.messageAll(CONSTANTS.games.UPDATE, engine.games);
   socket.on('action', function(message){
     engine.handleRequest(socket, message.type.substring(7), message.payload);
   });
