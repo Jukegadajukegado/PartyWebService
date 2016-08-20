@@ -11,7 +11,7 @@ export default function games(state = defaultState, action) {
   state = _.cloneDeep(state);
   switch (action.type) {
     case Constants.games.UPDATE:
-      state.game = action.payload;
+      state.games = action.payload;
       break;
     case Constants.games.UPDATE_GAME:
       state.game = action.payload;
