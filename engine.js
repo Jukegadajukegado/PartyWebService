@@ -16,6 +16,13 @@ export default class GameEngine{
             this.gameServers[game] = new games[game];
         }
     }
+    process(id, callback){
+        try{
+            callback();
+        }catch(e){
+            this.messageUser(id, Constants.error.SHOW, e.message);
+        }
+    }
     saveData(session, data){
 
     }
@@ -23,7 +30,10 @@ export default class GameEngine{
         
     }
     addUserToSession(user, sessionId){ // user: {name, id}, sessionId: string
-        this.sessions[sessionId].members[user.id] = user.name;
+        if(this.sessions[sessionId])
+            this.sessions[sessionId].members[user.id] = user.name;
+        else   
+            throw new Error("Session not found!");
     }
     handleRequest(socket, action, payload){
         var instance = this;
@@ -38,9 +48,11 @@ export default class GameEngine{
                 instance.messageUser(socket.id, Constants.games.GOTO_JOIN, id);
                 return; 
             case Constants.games.JOIN:
-                instance.addUserToSession({id: socket.id, name: payload.name}, payload.session);
-                socket.join(payload.session);
-                instance.messageUser(socket.id, Constants.games.JOIN, id);
+                this.process(socket.id, function(){
+                    instance.addUserToSession({id: socket.id, name: payload.name}, payload.session);
+                    socket.join(payload.session);
+                    instance.messageUser(socket.id, Constants.games.JOIN, id);
+                });
         }
     }
     messageUser(id, action, payload){

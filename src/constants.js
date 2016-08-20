@@ -8,6 +8,10 @@ var CONSTANTS = {
         CREATE: 'games_create',
         JOIN: 'games_join',
         GOTO_JOIN: 'games_go_to_join'
+    },
+    error: {
+        SHOW: 'error_show',
+        CLOSE: 'error_close'
     }
 };
 export default CONSTANTS;

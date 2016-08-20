@@ -8,6 +8,7 @@ import * as Colors from 'material-ui/styles/colors';
 import {Link} from 'react-router';
 import { hashHistory } from 'react-router';
 import Sound from 'react-sound';
+import Snackbar from 'material-ui/Snackbar';
 import map from './map';
 import superagent from 'superagent';
 import FontIcon from 'material-ui/FontIcon';
@@ -29,13 +30,18 @@ class App extends React.Component {
     superagent.get('/documents/patch.md').end(function(err, res){
       instance.props.dispatch.settings.updatePatch(res.text);
     });
+    window.app = this;
   } 
   componentDidMount(){
     this.checkResize();
   }
   @autobind
   checkResize(){
-      this.setState({largeWindow: window.innerWidth > 1270});
+    this.setState({largeWindow: window.innerWidth > 1270});
+  }
+  @autobind
+  handleErrorClose(){
+    this.props.dispatch.app.closeError();
   }
   @autobind
   toggleMenu(){
@@ -67,6 +73,12 @@ class App extends React.Component {
         <AppBar style={this.state.largeWindow?{zIndex: 1400}:{}} showMenuIconButton={!this.state.largeWindow} title="PartyWebService" onLeftIconButtonTouchTap={this.toggleMenu} />
         <div className="container">{this.props.children}</div>
         <Sound url="audio/bg.mp3" playStatus={this.props.settings.audio?Sound.status.PLAYING:Sound.status.PAUSED} />
+        <Snackbar
+          open={this.props.app.error.show}
+          message={this.props.app.error.message}
+          autoHideDuration={4000}
+          onRequestClose={this.handleErrorClose}
+        />
       </div>
     );
   }

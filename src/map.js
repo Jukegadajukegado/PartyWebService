@@ -10,6 +10,11 @@ function server(type){
 const mapDispatchToProps = (dispatch) => {
     return {
         dispatch: {
+            app: {
+                closeError: () => {
+                    dispatch({type: Constants.error.CLOSE, payload: null});
+                }
+            },
             settings: {
                 toggleAudio: () => {
                     dispatch({type: Constants.settings.TOGGLE_AUDIO})

@@ -28,6 +28,9 @@ class Join extends React.Component {
       </Card>
     );
   }
+  componentDidUpdate(){
+    this.refs.sessionInput.input.value = this.props.games.session;
+  }
 }
 
 export default map(Join);
