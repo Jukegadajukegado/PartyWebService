@@ -33,13 +33,17 @@ export default class Spyfall{
     receiveMessage(session, userId, action){
         switch(action){
             case this.actions.START:  //START GAME MESSAGE RECEIVED
-                this.games[session.id].started = true; 
+                this.games[session.id].started = true;
                 break;
         }
     }
     getUserMessages(session, userId){
         if(this.games[session.id].started){
-            return [{text: "Game Started!", actions: []}];
+            var place = Math.floor(Math.random()*Locations.length);
+
+            return [{text: Locations[place].name, actions: []}
+
+
         }else{
             var waiting = [{text: "Waiting for players to join...", actions: []}];
             if(this.games[session.id].admin == userId) waiting.push({text: "You are the game admin. Press 'Start Game' when you want to begin.", actions: [{id: this.actions.START, text: "Start Game"}]});
