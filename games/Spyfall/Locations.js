@@ -13,7 +13,7 @@ export default [
     },
     {
         name: "Space Station",
-        roles: ["Alien","Scientist","Main actor","astronaut","Engineer","Rocket specialist ","Commander","Tourist","Doctor"]
+        roles: ["Alien","Scientist","Pilot","astronaut","Engineer","Rocket specialist ","Commander","Tourist","Doctor"]
     },
     {
         name: "Pirate Ship",
