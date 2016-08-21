@@ -22,6 +22,22 @@ export default [
     {
         name: "School",
         roles: ["Janitor","Lunch Lady","Gym Teacher","Student","Principal","librarian ","Vice principal","Science Teacher","Math Teacher"]
+    },
+    {
+        name: " Military Base",
+        roles: ["Sniper","Bomber","Commander","Officer","Solider","Recruit ","Medic","Scout","Pilot"]
+    },
+    {
+        name: "Hotel",
+        roles: ["Bell boy","Security Guard","Maid","Manager","Bartender","Recruit ","Customer","Business Man","Janitor"]
+    },
+    {
+        name: "Casino",
+        roles: ["Gambler","Security Guard","Dealer","Manager","Bartender","Playboy Bunny","Under 18","Cheater","God of Gamblers"]
+    },
+    {
+        name: "Circus Tent",
+        roles: ["Clown","Tiger","tiger trainer","Performer","Speical effect technician ","Specator ","Juggler","Cotton candy seller","Ticket Master"]
     }
 
 
