@@ -1,5 +1,7 @@
 import Locations from './Locations';
+import _ from'lodash';
 export default class Spyfall{
+
 
     get name(){
         return "Spyfall";
@@ -9,10 +11,15 @@ export default class Spyfall{
     }
     createGame(session){ //{gameData, }
         this.games[session.id] = {
-            roles: {},
+            roles: {
+
+
+
+            },
             admin: "",
             started: false,
             location: -1,
+            players: [],
         };
         this.actions = {
             START: 'start_game'
@@ -37,14 +44,30 @@ export default class Spyfall{
             case this.actions.START:  //START GAME MESSAGE RECEIVED
                 game.started = true;
                 game.location = Math.floor(Math.random()*Locations.length);
-                game.roles = Locations[game.location].roles;
+                game.players = _.keys(userId);
+                game.roles[userId] = "Spy";
+
                 break;
         }
     }
     getUserMessages(session, userId){
+
         if(this.games[session.id].started){
 
-              return [{text: Locations[this.games[session.id].location].name, actions: []}];
+           if(this.games[session.id].roles[userId]="Spy"){
+
+
+             return [{text:"Location: ???"
+
+               , actions: []}];
+
+
+           }
+             else{
+              return [{text: Locations[this.games[session.id].location].name
+
+                , actions: []}];
+              }
 
         }else{
             var waiting = [{text: "Waiting for players to join...", actions: []}];
