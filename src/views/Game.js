@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import autobind from 'autobind-decorator';
 import { Link } from 'react-router'
-import {Card,CardTitle,CardText} from 'material-ui/Card';
+import {Card,CardTitle,CardText,CardActions} from 'material-ui/Card';
 import Divider from 'material-ui/Divider';
 import {List, ListItem} from 'material-ui/List';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import map from '../map';
 import Chip from 'material-ui/Chip';
-import RaisedButton  from 'material-ui/RaisedButton';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class Game extends React.Component {
 
@@ -17,8 +17,11 @@ class Game extends React.Component {
     this.state = {menuOpen: false, tab: 'game'};
 
   }
-  startgame(){
+
+  handleAction(action){
+    this.props.dispatch.games.action(this.props.games.game.id, action);
   }
+
   @autobind
   tabChange(tab){
     this.setState({
@@ -40,15 +43,17 @@ class Game extends React.Component {
               </CardText>
 
               {_.map(game.messages, (message, key) => (
-                <CardText key={"message-"+key}>
-                  {message.text}
-                  {_.map(message.actions, (action, actionKey) => (
-                    <button onClick={action.method} key={"message-"+key+"-"+actionKey}>{action.text}</button>
-                  ))}
-                </CardText>
+                <div>
+                  <Divider />
+                  <CardText key={"message-"+key}>
+                    {message.text}<br/>
+                    {message.actions.length ? <br/> : null}
+                    {_.map(message.actions, (action, actionKey) => (
+                      <RaisedButton onClick={this.handleAction.bind(this, action.id)} primary={true} key={"message-"+key+"-"+actionKey} label={action.text}/>
+                    ))} 
+                  </CardText>
+                </div>
               ))}
-
-              <RaisedButton label="startgame" primary={true}/>
             </Tab>
             <Tab label={"Players ("+Object.keys(game.members).length+")"} value="players">
               <div>

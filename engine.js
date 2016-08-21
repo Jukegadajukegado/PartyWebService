@@ -1,6 +1,7 @@
 import * as games from './games/games.js';
 import Constants from './src/constants.js';
 import ShortID from 'shortid';
+import _ from 'lodash';
 export default class GameEngine{
     get games(){
         var games = [];
@@ -39,7 +40,9 @@ export default class GameEngine{
         if(user.name.length == 0) throw new Error("Please enter a name!");
         if(user.name.length > 32) throw new Error("Please give us a shorter name!");
         if(this.sessions[sessionId]){
-            this.sessions[sessionId].members[user.id] = user.name;
+            var session = this.sessions[sessionId];
+            session.members[user.id] = user.name;
+            this.gameServers[session.meta.name].addUser(session, user.id);
             this.notify(sessionId, user.name+" has joined the game.");
         }else   
             throw new Error("Session not found!");
@@ -50,8 +53,13 @@ export default class GameEngine{
             delete this.sessions[sessionId].members[id];
         }
     }
-    updateSession(session){
-        this.message(session, Constants.games.UPDATE_GAME, this.sessions[session]);
+    updateSession(sessionId){
+        var session = this.sessions[sessionId];
+        for(var member in session.members){
+            var memberPayload = _.cloneDeep(session);
+            memberPayload.messages = this.gameServers[session.meta.name].getUserMessages(session, member);
+            this.message(member, Constants.games.UPDATE_GAME, memberPayload);
+        }
     }
     handleRequest(socket, action, payload){
         var instance = this;
@@ -61,9 +69,11 @@ export default class GameEngine{
                     var id = ShortID.generate();
                     instance.sessions[id] = {
                         meta: instance.gameServers[payload.game].meta,
+                        id: id,
                         members: {},
                         data: {}
                     };
+                    instance.gameServers[payload.game].createGame(instance.sessions[id]);
                     instance.message(socket.id, Constants.games.GOTO_JOIN, id);
                     break; 
                 case Constants.games.JOIN:
@@ -72,6 +82,11 @@ export default class GameEngine{
                         instance.message(socket.id, Constants.games.JOIN, payload.session);
                         instance.updateSession(payload.session);
                     break; 
+                case Constants.games.ACTION:
+                    var session = instance.sessions[payload.session];
+                    instance.gameServers[session.meta.name].receiveMessage(session, socket.id, payload.action);
+                    instance.updateSession(payload.session);
+                    break;
             }
         });
     }

@@ -27,6 +27,9 @@ const mapDispatchToProps = (dispatch) => {
                 set: (value) => {
                     dispatch({type: Constants.games.SET, payload: value});
                 },
+                action: (session, action) => {
+                    dispatch({type: server(Constants.games.ACTION), payload: {session: session, action: action}})
+                },
                 join: (session, name) => {
                     dispatch({type: server(Constants.games.JOIN), payload: {session: session, name: name}})
                 },
