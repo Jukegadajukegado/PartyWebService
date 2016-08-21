@@ -49,8 +49,10 @@ export default class GameEngine{
             throw new Error("Session not found!");
     }
     removeUserFromSession(id, sessionId){
-        if(this.sessions[sessionId]){
-            this.notify(sessionId, this.sessions[sessionId].members[id]+" has left the game.");
+        var session = this.sessions[sessionId];
+        if(session){
+            this.notify(sessionId, session.members[id]+" has left the game.");
+            this.gameServers[session.meta.name].removeUser(session, id);
             delete this.userRooms[id];
             delete this.sessions[sessionId].members[id];
         }
