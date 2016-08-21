@@ -32,20 +32,19 @@ export default class Spyfall{
         delete this.games[session.id].roles[user];
     }
     receiveMessage(session, userId, action){
+        var game = this.games[session.id];
         switch(action){
             case this.actions.START:  //START GAME MESSAGE RECEIVED
-                this.games[session.id].started = true;
-                this.games[session.id].location = Math.floor(Math.random()*Locations.length);
-                this.games[session.id].roles = Locations[game.location].roles;
-
-
+                game.started = true;
+                game.location = Math.floor(Math.random()*Locations.length);
+                game.roles = Locations[game.location].roles;
                 break;
         }
     }
     getUserMessages(session, userId){
         if(this.games[session.id].started){
 
-              return {text: Locations[this.games[session.id].location].name, actions: []}
+              return [{text: Locations[this.games[session.id].location].name, actions: []}];
 
         }else{
             var waiting = [{text: "Waiting for players to join...", actions: []}];
