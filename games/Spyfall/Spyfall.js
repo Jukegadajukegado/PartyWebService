@@ -1,5 +1,6 @@
 import Locations from './Locations';
 export default class Spyfall{
+
     get name(){
         return "Spyfall";
     }
@@ -11,7 +12,7 @@ export default class Spyfall{
             roles: {},
             admin: "",
             started: false,
-            location: ""
+            location: -1,
         };
         this.actions = {
             START: 'start_game'
@@ -34,15 +35,17 @@ export default class Spyfall{
         switch(action){
             case this.actions.START:  //START GAME MESSAGE RECEIVED
                 this.games[session.id].started = true;
+                this.games[session.id].location = Math.floor(Math.random()*Locations.length);
+                this.games[session.id].roles = Locations[game.location].roles;
+
+
                 break;
         }
     }
     getUserMessages(session, userId){
         if(this.games[session.id].started){
-            var place = Math.floor(Math.random()*Locations.length);
 
-            return [{text: Locations[place].name, actions: []}
-
+              return {text: Locations[this.games[session.id].location].name, actions: []}
 
         }else{
             var waiting = [{text: "Waiting for players to join...", actions: []}];
