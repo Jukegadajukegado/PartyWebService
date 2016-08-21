@@ -1,3 +1,5 @@
+import Mafias from './Mafia';
+import _ from'lodash';
 export default class Mafia{
     get name(){
         return "Mafia";
@@ -7,14 +9,10 @@ export default class Mafia{
     }
     createGame(session){ //{gameData, }
         this.games[session.id] = {
-            roles: {
-
-
-
-            },
+            roleTBH :{} = Mafias, //import role list for later use
+            roles: {},
             admin: "",
             started: false,
-            location: -1,
 
         };
         this.actions = {
@@ -39,34 +37,48 @@ export default class Mafia{
         switch(action){
             case this.actions.START:  //START GAME MESSAGE RECEIVED
                 game.started = true;
-                game.location = Math.floor(Math.random()*Locations.length);
+              //  game.location = Math.floor(Math.random()*Locations.length);
+              var players = _.keys(game.roles);
+            //  var Mafia = _.sample(players);
+            //  game.roles[spy] = "Spy";
+              for (var player in game.roles.length *0.3){ //pick 30% of the player to be Mafia
+              while(1==1){
+                if(player != Mafia){
+                var Mafia = _.sample(players);
+                game.roles[Mafia] = "Mafia"
+               break;
+              }
+            }
 
-                game.roles[userId] = "Janitor";
+              }
 
-                break;
+              for(var player in game.roles){ //random role for other else //if u can make docotr and invest only unique plz
+                while(1==1){
+                  if(player != Mafia){
+                   game.roles[player] = _.sample(game.roleTBH);
+                 break;
+                }
+              }
+              break;
         }
-    }
+    }}
     getUserMessages(session, userId){
 
-        if(this.games[session.id].started){
+        var game = this.games[session.id];
 
-           if(this.games[session.id].roles[userId]="Spy"){
+        if(game.started){
 
+            var role = game.roles[userId];
 
-             return [{text:"Location: ???"
+            var message = [{text:"Hello" + session.members[userId]+"! You are a "+role, actions: []}];
+            if(game.admin == userId) message.push({text: "You are the game admin. Press 'New Game' when you want to begin a new game.", actions: [{id: this.actions.START, text: "New Game"}]});
 
-               , actions: []}];
+            return message;
 
-           }
-             else{
-              return [{text: Locations[this.games[session.id].location].name
-
-                , actions: []}];
-              }
 
         }else{
             var waiting = [{text: "Waiting for players to join...", actions: []}];
-            if(this.games[session.id].admin == userId) waiting.push({text: "You are the game admin. Press 'Start Game' when you want to begin.", actions: [{id: this.actions.START, text: "Start Game"}]});
+            if(game.admin == userId) waiting.push({text: "You are the game admin. Press 'Start Game' when you want to begin.", actions: [{id: this.actions.START, text: "Start Game"}]});
             return waiting;
         }
     }
@@ -74,4 +86,4 @@ export default class Mafia{
         this.engine = engine;
         this.games = {};
     }
-}
+  }
