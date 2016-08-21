@@ -7,19 +7,14 @@ export default class Spyfall{
         return "Spyfall";
     }
     get description(){
-        return 'In SpyFall, there is a spy hidden among you.Ask questions, find the spy'
+        return 'In SpyFall, there is a spy hidden among you. Ask questions, find the spy'
     }
     createGame(session){ //{gameData, }
         this.games[session.id] = {
-            roles: {
-
-
-
-            },
+            roles: {},
             admin: "",
             started: false,
-            location: -1,
-            players: [],
+            location: -1
         };
         this.actions = {
             START: 'start_game'
@@ -44,34 +39,34 @@ export default class Spyfall{
             case this.actions.START:  //START GAME MESSAGE RECEIVED
                 game.started = true;
                 game.location = Math.floor(Math.random()*Locations.length);
-                game.players = _.keys(userId);
-                game.roles[userId] = "Spy";
-
+                var players = _.keys(game.roles);
+                var spy = _.sample(players);
+                game.roles[spy] = "Spy";
+                for(var player in game.roles){
+                    if(player != spy){
+                        game.roles[player] = _.sample(Locations[game.location].roles);
+                    }
+                }
                 break;
         }
     }
     getUserMessages(session, userId){
 
-        if(this.games[session.id].started){
+        var game = this.games[session.id];
 
-           if(this.games[session.id].roles[userId]="Spy"){
+        if(game.started){
 
+            var role = game.roles[userId];
 
-             return [{text:"Location: ???"
+            var message = [{text:"Hello "+session.members[userId]+"! You are a "+role+" located at "+(role == "Spy" ? "???" : Locations[game.location].name)+"!", actions: []}];
+            if(game.admin == userId) message.push({text: "You are the game admin. Press 'New Game' when you want to begin a new game.", actions: [{id: this.actions.START, text: "New Game"}]});
 
-               , actions: []}];
+            return message;
 
-
-           }
-             else{
-              return [{text: Locations[this.games[session.id].location].name
-
-                , actions: []}];
-              }
 
         }else{
             var waiting = [{text: "Waiting for players to join...", actions: []}];
-            if(this.games[session.id].admin == userId) waiting.push({text: "You are the game admin. Press 'Start Game' when you want to begin.", actions: [{id: this.actions.START, text: "Start Game"}]});
+            if(game.admin == userId) waiting.push({text: "You are the game admin. Press 'Start Game' when you want to begin.", actions: [{id: this.actions.START, text: "Start Game"}]});
             return waiting;
         }
     }
