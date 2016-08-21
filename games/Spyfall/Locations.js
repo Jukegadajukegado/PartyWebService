@@ -5,6 +5,7 @@ export default [
     },
     {
         name: "Bank",
+        roles: ["Teller","Manager","Business Man","Robber","security guard"]
     },
 
 ];
