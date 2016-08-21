@@ -42,6 +42,7 @@ export default class Spyfall{
             return waiting;
         }
     }
+  
     constructor(engine){
         this.engine = engine;
         this.games = {};
