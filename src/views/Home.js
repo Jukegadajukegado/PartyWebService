@@ -19,7 +19,7 @@ class Home extends React.Component {
         <h1>Party Web Service</h1>
 
         <p> Click on the menu to perform an action </p>
-            <p> KNOWN BUG -Spyfall: roles can be repeated, sometimes the lobby will crash </br>if someone join after the game has been starter</p>
+          
 
       </div>
     );
