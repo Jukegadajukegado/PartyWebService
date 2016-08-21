@@ -58,7 +58,7 @@ export default class Spyfall{
 
             var role = game.roles[userId];
 
-            var message = [{text:"Hello "+session.members[userId]+"! You are a "+<strong>role</strong>+" located at "+(role == "Spy" ? "???" :Locations[game.location].name)>+"!", actions: []}];
+            var message = [{text:"Hello "+session.members[userId]+"! You are a "+role+" located at "+(role == "Spy" ? "???" :Locations[game.location].name)>+"!", actions: []}];
             if(game.admin == userId) message.push({text: "You are the game admin. Press 'New Game' when you want to begin a new game.", actions: [{id: this.actions.START, text: "New Game"}]});
 
             return message;
