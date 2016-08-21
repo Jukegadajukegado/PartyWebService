@@ -11,6 +11,8 @@ const defaultState = {
     },
     members: {}
   },
+  name: "",
+  sessionPersist: "",
   session: ""
 };
 export default function games(state = defaultState, action) {

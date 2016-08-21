@@ -42,6 +42,7 @@ export default class GameEngine{
         if(this.sessions[sessionId]){
             var session = this.sessions[sessionId];
             session.members[user.id] = user.name;
+            this.userRooms[user.id] = sessionId;
             this.gameServers[session.meta.name].addUser(session, user.id);
             this.notify(sessionId, user.name+" has joined the game.");
         }else   
@@ -49,7 +50,8 @@ export default class GameEngine{
     }
     removeUserFromSession(id, sessionId){
         if(this.sessions[sessionId]){
-            this.notify(room, this.sessions[sessionId].members[id]+" has left the game.");
+            this.notify(sessionId, this.sessions[sessionId].members[id]+" has left the game.");
+            delete this.userRooms[id];
             delete this.sessions[sessionId].members[id];
         }
     }
@@ -91,8 +93,8 @@ export default class GameEngine{
         });
     }
     handleDisconnect(socket){
-        for(var i in socket.rooms){  
-            var room = socket.rooms[i];
+        if(this.userRooms[socket.id]){
+            var room = this.userRooms[socket.id];
             this.removeUserFromSession(socket.id, room);
             this.updateSession(room);
         }
@@ -108,6 +110,7 @@ export default class GameEngine{
     }
     constructor(io){
         this.sessions = {};
+        this.userRooms = {};
         this.io = io;
         this.register(games);
     }

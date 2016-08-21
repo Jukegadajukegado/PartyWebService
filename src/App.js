@@ -17,6 +17,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {menuOpen: false, largeWindow: false};
+    this.storeReady = false;
     this.pageNames = {
       '/': 'home',
       '/join': 'join',
@@ -32,6 +33,12 @@ class App extends React.Component {
     });
     window.app = this;
   } 
+  componentDidUpdate(){
+    if(this.props.games.sessionPersist.length > 0 && this.props.games.name.length > 0 && !this.storeReady){
+      this.storeReady = true;
+      this.props.dispatch.games.join(this.props.games.sessionPersist,this.props.games.name);
+    }
+  }
   componentDidMount(){
     this.checkResize();
   }
