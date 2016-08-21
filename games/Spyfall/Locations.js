@@ -22,6 +22,8 @@ export default [
     {
         name: "School",
         roles: ["Janitor","Lunch Lady","Gym Teacher","Student","Principal","librarian ","Vice principal","Science Teacher","Math Teacher"]
+    }
+
 
 
 ];
