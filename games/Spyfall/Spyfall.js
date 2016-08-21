@@ -31,7 +31,11 @@ export default class Spyfall{
         delete this.games[session.id].roles[user];
     }
     receiveMessage(session, userId, action){
-        this.games[session.id].started = true;
+        switch(action){
+            case this.actions.START:  //START GAME MESSAGE RECEIVED
+                this.games[session.id].started = true; 
+                break;
+        }
     }
     getUserMessages(session, userId){
         if(this.games[session.id].started){
@@ -42,7 +46,6 @@ export default class Spyfall{
             return waiting;
         }
     }
-  
     constructor(engine){
         this.engine = engine;
         this.games = {};
