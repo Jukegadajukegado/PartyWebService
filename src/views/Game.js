@@ -39,25 +39,14 @@ class Game extends React.Component {
                 <strong>Description:</strong><br/>{game.meta.description}
               </CardText>
 
-              <CardText style={{background:'#FAFAFA'}}>
-                <strong>Roles:</strong>
-                {(() => {
-             switch (game.meta.name ) {
-             case "Mafia":   return "Mafia";
-             case "Spyfall":
-
-             var roles = [];
-             for(var i=0;i <Object.keys(game.members).length;i++){
-               var role =["Spy","???"];
-               roles[i] = role[i];
-
-             }
-              return    <List><ListItem primaryText = {roles}/></List>  ;
-
-             default:      return "Error";
-         }
-        })()}
-              </CardText>
+              {_.map(game.messages, (message, key) => (
+                <CardText key={"message-"+key}>
+                  {message.text}
+                  {_.map(message.actions, (action, actionKey) => (
+                    <button onClick={action.method} key={"message-"+key+"-"+actionKey}>{action.text}</button>
+                  ))}
+                </CardText>
+              ))}
 
               <RaisedButton label="startgame" primary={true}/>
             </Tab>
@@ -65,7 +54,7 @@ class Game extends React.Component {
               <div>
                 <List>
                   {_.map(game.members, (member, key) => (
-                    <ListItem primaryText={member} />
+                    <ListItem key={"member-"+member} primaryText={member} />
                   ))}
                 </List>
               </div>
