@@ -5,7 +5,7 @@ export default class Mafia{
         return "Mafia";
     }
     get description(){
-        return 'In Mafia, there are "Mafia" members who kill people every night. Investigators try to figure out who is killing everyone. Then, at sunset, the collective votes to kill the suspects.'
+        return '[THIS GAME CURRENTLY DOES NOT WORK] In Mafia, there are "Mafia" members who kill people every night. Investigators try to figure out who is killing everyone. Then, at sunset, the collective votes to kill the suspects.'
     }
     createGame(session){ //{gameData, }
         this.games[session.id] = {
