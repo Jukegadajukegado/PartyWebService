@@ -1,4 +1,4 @@
-import Mafias from './Mafia';
+import Classic from './Classic';
 import _ from'lodash';
 export default class Mafia{
     get name(){
@@ -9,7 +9,7 @@ export default class Mafia{
     }
     createGame(session){ //{gameData, }
         this.games[session.id] = {
-            roleTBH :{} = Mafias, //import role list for later use
+          
             roles: {},
             admin: "",
             started: false,
@@ -35,32 +35,20 @@ export default class Mafia{
     receiveMessage(session, userId, action){
         var game = this.games[session.id];
         switch(action){
-            case this.actions.START:  //START GAME MESSAGE RECEIVED
-                game.started = true;
-              //  game.location = Math.floor(Math.random()*Locations.length);
+          case this.actions.START:  //START GAME MESSAGE RECEIVED
+              game.started = true;
+              game.location = Math.floor(Math.random()*Locations.length);
               var players = _.keys(game.roles);
-            //  var Mafia = _.sample(players);
-            //  game.roles[spy] = "Spy";
-              for (var player in game.roles.length *0.3){ //pick 30% of the player to be Mafia
-              while(1==1){
-                if(player != Mafia){
-                var Mafia = _.sample(players);
-                game.roles[Mafia] = "Mafia"
-               break;
-              }
-            }
-
-              }
-
-              for(var player in game.roles){ //random role for other else //if u can make docotr and invest only unique plz
-                while(1==1){
-                  if(player != Mafia){
-                   game.roles[player] = _.sample(game.roleTBH);
-                 break;
-                }
+              var spy = _.sample(players);
+              game.roles[spy] = "Spy";
+              for(var player in game.roles){
+                  if(player != spy){
+                      game.roles[player] = _.sample(Locations[game.location].roles);
+                  }
               }
               break;
-        }
+      }
+
     }}
     getUserMessages(session, userId){
 
