@@ -8,7 +8,7 @@ export default [
   {
       name: "Villager",
       attributes: "none"
-  }
+  },
   {
       name: "Villager",
       attributes: "none"

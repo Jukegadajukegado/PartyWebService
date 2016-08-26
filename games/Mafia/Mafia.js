@@ -9,7 +9,7 @@ export default class Mafia{
     }
     createGame(session){ //{gameData, }
         this.games[session.id] = {
-          
+
             roles: {},
             admin: "",
             started: false,
@@ -34,22 +34,29 @@ export default class Mafia{
     }
     receiveMessage(session, userId, action){
         var game = this.games[session.id];
+
         switch(action){
           case this.actions.START:  //START GAME MESSAGE RECEIVED
               game.started = true;
-              game.location = Math.floor(Math.random()*Locations.length);
-              var players = _.keys(game.roles);
-              var spy = _.sample(players);
-              game.roles[spy] = "Spy";
+
+
+              game.role = _.shuffle(game.roles); //shuffle the player order <- someone plz shuffle this
+
+              var i = 0;
               for(var player in game.roles){
-                  if(player != spy){
-                      game.roles[player] = _.sample(Locations[game.location].roles);
-                  }
+
+
+                      game.roles[player] = Classic[i].name; //???????
+                      i++;
+
               }
+
+
               break;
       }
 
-    }}
+    }
+
     getUserMessages(session, userId){
 
         var game = this.games[session.id];
@@ -58,7 +65,7 @@ export default class Mafia{
 
             var role = game.roles[userId];
 
-            var message = [{text:"Hello" + session.members[userId]+"! You are a "+role, actions: []}];
+            var message = [{text:"Hello "+game.roles[0].player + session.members[userId]+"! You are a "+role, actions: []}];
             if(game.admin == userId) message.push({text: "You are the game admin. Press 'New Game' when you want to begin a new game.", actions: [{id: this.actions.START, text: "New Game"}]});
 
             return message;
